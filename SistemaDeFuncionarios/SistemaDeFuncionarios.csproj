@@ -56,6 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DepartamentosRepository.cs" />
+    <Compile Include="EmpresaDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpresaDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="FuncionariosRepository.cs" />
     <Compile Include="Departamento.cs" />
     <Compile Include="EmpresaDataSet.Designer.cs">
@@ -95,6 +100,17 @@
     </None>
     <None Include="EmpresaDataSet.xss">
       <DependentUpon>EmpresaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="EmpresaDataSet1.xsc">
+      <DependentUpon>EmpresaDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="EmpresaDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmpresaDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EmpresaDataSet1.xss">
+      <DependentUpon>EmpresaDataSet1.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

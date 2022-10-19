@@ -61,6 +61,7 @@ namespace SistemaDeFuncionarios
             if(string.IsNullOrEmpty(textNomeFunc.Text) || 
                 string.IsNullOrEmpty(maskedTextCpf.Text) || 
                 string.IsNullOrEmpty(maskedTextSalario.Text) || 
+                maskedTextSalario.MaskCompleted == false ||
                 string.IsNullOrEmpty(datePickerContratacao.Value.ToString()) ||
                 comboBoxDep.SelectedValue == null) 
             {
@@ -175,15 +176,19 @@ namespace SistemaDeFuncionarios
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(textNomeDep.Text))
+            if (string.IsNullOrEmpty(textNomeDep.Text))
             {
                 // mostra dialog
                 MessageBox.Show("Insira um nome existente para consultar o departamento.");
                 Console.WriteLine("Insira um nome existente para consultar o departamento.");
+            } else if (textNomeDep.Text.Any(char.IsDigit))
+            {
+                // mostrar dialog
+                MessageBox.Show("O campo Nome não pode possuir dígitos, tente novamente"); 
             } else
             {
                 Departamento departamento = departamentosRepository.FindByNome(textNomeDep.Text);
-                if(departamento == null)
+                if (departamento == null)
                 {
                     MessageBox.Show("Departamento não encontrado.");
                 } else
@@ -195,19 +200,25 @@ namespace SistemaDeFuncionarios
 
                     dataGridViewDep.DataSource = listDepartamentosByNome;
                 }
-                
+
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(textNomeDep.Text))
+            if (string.IsNullOrEmpty(textNomeDep.Text))
             {
                 // mostra dialog
                 MessageBox.Show("Insira um nome para o departamento.");
                 Console.WriteLine("Insira um nome para o departamento.");
-            } else
-            {    
+            }
+            else if (textNomeDep.Text.Any(char.IsDigit))
+            {
+                // mostrar dialog
+                MessageBox.Show("O campo Nome não pode possuir dígitos, tente novamente");
+            }
+            else
+            {
                 Departamento departamento = BuildDepartamento();
                 departamentosRepository.InsertDepartamento(departamento);
                 dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
@@ -341,24 +352,31 @@ namespace SistemaDeFuncionarios
 
         private void button9_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(textNomeDep.Text))
+            if (string.IsNullOrEmpty(textNomeDep.Text))
             {
                 MessageBox.Show("Insira um nome para o departamento");
-            } else
+            }
+            else if (textNomeDep.Text.Any(char.IsDigit))
             {
-                if(DepCellWasSelected)
+                // mostrar dialog
+                MessageBox.Show("O campo Nome não pode possuir dígitos, tente novamente");
+            }
+            else
+            {
+                if (DepCellWasSelected)
                 {
                     Departamento departamento = BuildDepartamento();
                     departamento.Id = idDep;
                     departamentosRepository.Update(departamento);
                     dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
                     ClearFieldsDep();
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Selecione um departamento para editar");
                 }
                 DepCellWasSelected = false;
-                
+
             }
             
         }
