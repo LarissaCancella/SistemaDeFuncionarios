@@ -66,5 +66,10 @@ namespace SistemaDeFuncionarios
         {
             return model.Set<Departamento>();
         }
+
+        public List<Departamento> GetDepartamentosList()
+        {
+            return model.Departamento.ToList();
+        }
     }
 }

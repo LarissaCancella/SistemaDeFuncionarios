@@ -50,10 +50,27 @@ namespace SistemaDeFuncionarios
                 Funcionario funcionario = BuildFuncionario();
                 funcionariosRepository.InsertFuncionario(funcionario);
                 dataGridViewFunc.DataSource = funcionariosRepository.GetFuncionarios().ToList();
-                ClearFieldsFunc();  
+                ClearFieldsFunc();
+                RefreshComboBoxFunc();
             }
             
 
+        }
+
+        public void RefreshComboBoxFunc()
+        {
+            List<Funcionario> list = funcionariosRepository.GetListFuncionarios();
+            comboBoxFunc.DataSource = list;
+            comboBoxFunc.DisplayMember = "Nome";
+            comboBoxFunc.ValueMember = "Id";
+        }
+
+        public void RefreshComboBoxDep()
+        {
+            List<Departamento> list = departamentosRepository.GetDepartamentosList();
+            comboBoxDep.DataSource = list;
+            comboBoxDep.DisplayMember = "Nome";
+            comboBoxDep.ValueMember = "Id";
         }
 
         private bool ValidateFields()
@@ -223,6 +240,7 @@ namespace SistemaDeFuncionarios
                 departamentosRepository.InsertDepartamento(departamento);
                 dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
                 ClearFieldsDep();
+                RefreshComboBoxDep();
             }
         }
 
@@ -314,10 +332,12 @@ namespace SistemaDeFuncionarios
                     funcionariosRepository.Update(funcionario);
                     dataGridViewFunc.DataSource = funcionariosRepository.GetFuncionarios().ToList();
                     ClearFieldsFunc();
+                    RefreshComboBoxFunc();
                 } else
                 {
                     MessageBox.Show("Selecione um Funcionario para editar.");
                 }
+                FuncCellWasSelected = false;
                 
             }
             
@@ -326,11 +346,20 @@ namespace SistemaDeFuncionarios
         private void button10_Click(object sender, EventArgs e)
         {
             // so pode deletar departamento que nao esteja relacionado a nenhum gerente
-            Departamento departamento = BuildDepartamento();
-            departamento.Id = idDep;
-            departamentosRepository.Delete(departamento);
-            dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
-            ClearFieldsDep();
+            if (DepCellWasSelected)
+            {
+                Departamento departamento = BuildDepartamento();
+                departamento.Id = idDep;
+                departamentosRepository.Delete(departamento);
+                dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
+                ClearFieldsDep();
+                RefreshComboBoxDep();
+            } else
+            {
+                MessageBox.Show("Selecione um departamento para excluir.");
+            }
+            DepCellWasSelected = false;
+                
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -340,13 +369,18 @@ namespace SistemaDeFuncionarios
                 // mostra dialog
                 MessageBox.Show("Insira um cpf para excluir o Funcionario");
                 Console.WriteLine("Insira um cpf para excluir o Funcionario");
-            } else
+            } else if(FuncCellWasSelected)
             {
                 funcionariosRepository.DeleteByCPF(maskedTextCpf.Text);
                 dataGridViewFunc.DataSource = funcionariosRepository.GetFuncionarios().ToList();
                 dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
                 ClearFieldsFunc();
+                RefreshComboBoxFunc();
+            } else
+            {
+                MessageBox.Show("Selecione um Funcionario para excluir.");
             }
+            FuncCellWasSelected = false;
             
         }
 
@@ -370,6 +404,7 @@ namespace SistemaDeFuncionarios
                     departamentosRepository.Update(departamento);
                     dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
                     ClearFieldsDep();
+                    RefreshComboBoxDep();
                 }
                 else
                 {
