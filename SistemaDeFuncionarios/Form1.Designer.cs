@@ -397,6 +397,7 @@
             this.comboBoxFunc.Size = new System.Drawing.Size(257, 21);
             this.comboBoxFunc.TabIndex = 21;
             this.comboBoxFunc.ValueMember = "Id";
+            this.comboBoxFunc.SelectedIndexChanged += new System.EventHandler(this.comboBoxFunc_SelectedIndexChanged);
             // 
             // label9
             // 

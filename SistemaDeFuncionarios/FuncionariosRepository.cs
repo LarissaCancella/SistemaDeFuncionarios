@@ -58,5 +58,10 @@ namespace SistemaDeFuncionarios
             return model.Set<Funcionario>();
         }
 
+        public List<Funcionario> GetListFuncionarios()
+        {
+            return model.Funcionario.ToList();
+        }
+
     }
 }

@@ -50,7 +50,7 @@ namespace SistemaDeFuncionarios
                 Funcionario funcionario = BuildFuncionario();
                 funcionariosRepository.InsertFuncionario(funcionario);
                 dataGridViewFunc.DataSource = funcionariosRepository.GetFuncionarios().ToList();
-                ClearFieldsFunc();
+                ClearFieldsFunc();  
             }
             
 
@@ -77,6 +77,10 @@ namespace SistemaDeFuncionarios
             } else if(datePickerContratacao.Value.Year < 2000 || datePickerContratacao.Value > DateTime.Today)
             {
                 MessageBox.Show("A data de contratação deve ser posterior ao ano 2000 e inferior a data atual");
+                return false;
+            } else if(maskedTextCpf.Text.Length < 11)
+            {
+                MessageBox.Show("O campo cpf deve possuir 11 digitos.");
                 return false;
             } else
             {
@@ -362,6 +366,11 @@ namespace SistemaDeFuncionarios
         private void maskedTextSalario_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
 
+        }
+
+        private void comboBoxFunc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
         }
     }
 }
