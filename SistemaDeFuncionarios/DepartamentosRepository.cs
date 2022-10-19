@@ -31,12 +31,16 @@ namespace SistemaDeFuncionarios
         public void Delete(Departamento departamentoToDelete)
         {
             Departamento departamento = model.Departamento.Where(x => x.Id == departamentoToDelete.Id).FirstOrDefault();
+            List<Funcionario> funcionariosNoDepartamento = model.Funcionario.Where(x => x.IdDepartamento == departamento.Id).ToList();
             if(departamento == null)
             {
                 MessageBox.Show("Departamento não encontrado.");
             } else if(departamento.idGerente != 0)
             {
                 MessageBox.Show("O departamento não pôde ser excluido pois existe um gerente associado.");
+            } else if(funcionariosNoDepartamento != null && funcionariosNoDepartamento.Count > 0)
+            {
+                MessageBox.Show("Ainda existem funcionarios nesse departamento, exclua-os primeiro.");
             } else
             {
                 model.Departamento.Remove(departamento);

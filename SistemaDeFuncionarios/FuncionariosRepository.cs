@@ -27,12 +27,12 @@ namespace SistemaDeFuncionarios
 
         public Funcionario FindByCPF(string cpf)
         {
-            return model.Funcionario.Where(x => x.Cpf == cpf).First();
+            return model.Funcionario.Where(x => x.Cpf == cpf).FirstOrDefault();
         }
 
         public void Update(Funcionario newFuncionario)
         {
-            Funcionario funcionario = model.Funcionario.Where(x => x.Id == newFuncionario.Id).First();
+            Funcionario funcionario = model.Funcionario.Where(x => x.Id == newFuncionario.Id).FirstOrDefault();
             funcionario.Nome = newFuncionario.Nome;
             funcionario.Cpf = newFuncionario.Cpf;
             funcionario.Salario = newFuncionario.Salario;
@@ -43,7 +43,7 @@ namespace SistemaDeFuncionarios
 
         public void DeleteByCPF(string cpf)
         {
-            Funcionario funcionario = model.Funcionario.Where(x => x.Cpf == cpf).First();
+            Funcionario funcionario = model.Funcionario.Where(x => x.Cpf == cpf).FirstOrDefault();
             List<Departamento> departamentos = model.Departamento.Where(x => x.idGerente == funcionario.Id).ToList();
             if(departamentos.Count > 0)
             {

@@ -48,10 +48,20 @@ namespace SistemaDeFuncionarios
             if (ValidateFields())
             {
                 Funcionario funcionario = BuildFuncionario();
-                funcionariosRepository.InsertFuncionario(funcionario);
-                dataGridViewFunc.DataSource = funcionariosRepository.GetFuncionarios().ToList();
-                ClearFieldsFunc();
-                RefreshComboBoxFunc();
+                Funcionario funcionarioByCpf = funcionariosRepository.FindByCPF(funcionario.Cpf);
+                if(funcionarioByCpf != null)
+                {
+                    MessageBox.Show("Já existe um funcionario com o mesmo CPF cadastrado, por favor insira um diferente.");
+                    // ClearFieldsFunc();
+                }
+                else
+                {
+                    funcionariosRepository.InsertFuncionario(funcionario);
+                    dataGridViewFunc.DataSource = funcionariosRepository.GetFuncionarios().ToList();
+                    ClearFieldsFunc();
+                    RefreshComboBoxFunc();
+                }
+                
             }
             
 
@@ -112,14 +122,11 @@ namespace SistemaDeFuncionarios
             maskedTextCpf.Clear();
             maskedTextSalario.Clear();
             datePickerContratacao.ResetText();
-            comboBoxDep.ResetText();
-            comboBoxFunc.ResetText();
         }
 
         private void ClearFieldsDep()
         {
             textNomeDep.Clear();
-            comboBoxFunc.ResetText();
         }
 
         public Funcionario BuildFuncionario()
@@ -294,11 +301,13 @@ namespace SistemaDeFuncionarios
         private void button5_Click(object sender, EventArgs e)
         {
             dataGridViewFunc.DataSource = funcionariosRepository.GetFuncionarios().ToList();
+            ClearFieldsFunc();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             dataGridViewDep.DataSource = departamentosRepository.GetDepartamentos().ToList();
+            ClearFieldsDep();
         }
 
         private void dataGridViewFunc_CellContentClick(object sender, DataGridViewCellEventArgs e)
