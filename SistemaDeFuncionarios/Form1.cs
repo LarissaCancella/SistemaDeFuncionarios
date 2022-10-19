@@ -358,5 +358,10 @@ namespace SistemaDeFuncionarios
             }
             
         }
+
+        private void maskedTextSalario_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
     }
 }

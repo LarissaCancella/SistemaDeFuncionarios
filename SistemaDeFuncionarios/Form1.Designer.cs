@@ -131,10 +131,11 @@
             // maskedTextSalario
             // 
             this.maskedTextSalario.Location = new System.Drawing.Point(149, 122);
-            this.maskedTextSalario.Mask = "00000,00";
+            this.maskedTextSalario.Mask = "0000,00";
             this.maskedTextSalario.Name = "maskedTextSalario";
             this.maskedTextSalario.Size = new System.Drawing.Size(123, 20);
             this.maskedTextSalario.TabIndex = 5;
+            this.maskedTextSalario.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextSalario_MaskInputRejected);
             // 
             // label4
             // 
@@ -301,8 +302,8 @@
             this.dataGridViewDep.ReadOnly = true;
             this.dataGridViewDep.Size = new System.Drawing.Size(257, 228);
             this.dataGridViewDep.TabIndex = 15;
-            this.dataGridViewDep.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDep_CellContentClick);
             this.dataGridViewDep.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDep_CellClick);
+            this.dataGridViewDep.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDep_CellContentClick);
             // 
             // idDataGridViewTextBoxColumn1
             // 
