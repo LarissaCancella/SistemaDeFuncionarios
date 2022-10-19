@@ -30,6 +30,11 @@ namespace SistemaDeFuncionarios
             return model.Funcionario.Where(x => x.Cpf == cpf).FirstOrDefault();
         }
 
+        public Funcionario FindById(int id)
+        {
+            return model.Funcionario.Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public void Update(Funcionario newFuncionario)
         {
             Funcionario funcionario = model.Funcionario.Where(x => x.Id == newFuncionario.Id).FirstOrDefault();

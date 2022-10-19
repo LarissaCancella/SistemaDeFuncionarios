@@ -25,8 +25,8 @@ namespace SistemaDeFuncionarios
             funcionariosRepository = new FuncionariosRepository();
             departamentosRepository = new DepartamentosRepository();
             InitializeComponent();
-            comboBoxDep.ResetText();
-            comboBoxFunc.ResetText();
+            comboBoxDep.SelectedIndex = -1;
+            comboBoxFunc.SelectedIndex = -1;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -268,7 +268,15 @@ namespace SistemaDeFuncionarios
                 DataGridViewRow row = dataGridViewDep.Rows[e.RowIndex];
                 idDep = Int16.Parse(row.Cells[0].Value.ToString());
                 textNomeDep.Text = row.Cells[1].Value.ToString();
-                comboBoxFunc.SelectedValue = row.Cells[2].Value.ToString();
+                Funcionario funcionario = funcionariosRepository.FindById(Int16.Parse(row.Cells[2].Value.ToString()));
+                if(funcionario != null)
+                {
+                    comboBoxFunc.SelectedIndex = comboBoxFunc.FindStringExact(funcionario.Nome);
+                } else
+                {
+                    comboBoxFunc.SelectedIndex = -1;
+                }
+                
                 DepCellWasSelected = true;
             }
         }
@@ -319,13 +327,15 @@ namespace SistemaDeFuncionarios
         {
             if (e.RowIndex >= 0)
             {
+                
                 DataGridViewRow row = dataGridViewFunc.Rows[e.RowIndex];
                 idFunc = Int16.Parse(row.Cells[0].Value.ToString());
                 textNomeFunc.Text = row.Cells[1].Value.ToString();
                 maskedTextCpf.Text = row.Cells[2].Value.ToString();
                 maskedTextSalario.Text = row.Cells[3].Value.ToString();
                 datePickerContratacao.Value = (DateTime)row.Cells[4].Value;
-                comboBoxDep.SelectedValue = row.Cells[5].Value.ToString();
+                Departamento departamento = departamentosRepository.FindById(Int16.Parse(row.Cells[5].Value.ToString()));
+                comboBoxDep.SelectedIndex = comboBoxDep.FindStringExact(departamento.Nome);
                 FuncCellWasSelected = true;
             }
         }

@@ -28,6 +28,11 @@ namespace SistemaDeFuncionarios
             return model.Departamento.Where(x => x.Nome == nome).FirstOrDefault();
         }
 
+        public Departamento FindById(int id)
+        {
+            return model.Departamento.Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public void Delete(Departamento departamentoToDelete)
         {
             Departamento departamento = model.Departamento.Where(x => x.Id == departamentoToDelete.Id).FirstOrDefault();
